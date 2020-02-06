@@ -1,0 +1,33 @@
+.company-summary-block {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	background-color: #fff;
+	padding: 20px;
+	cursor: pointer;
+	box-shadow: 2px 2px 2px 0px rgba(204,204,204,1);
+	transition: box-shadow 0.25s;
+}
+
+.company-summary-block:hover {
+	box-shadow: 5px 5px 5px 0px rgba(204,204,204,1);
+}
+
+.company-name {
+	margin-top: 0;
+}
+
+.secondary-details {
+	display: flex;
+	flex-direction: row;
+}
+
+.company-abn {
+	margin: 0 20px 0 0;
+	font-size: 20px;
+}
+
+.company-state {
+	margin: 0 20px 0 0;
+	font-size: 20px;
+}

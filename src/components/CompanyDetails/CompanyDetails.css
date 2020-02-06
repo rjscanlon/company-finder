@@ -1,0 +1,18 @@
+.company-details-block {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	background-color: #fff;
+	padding: 20px;
+	box-shadow: 2px 2px 2px 0px rgba(204,204,204,1);
+	transition: box-shadow 0.25s;
+}
+
+.back-button {
+	background: none!important;
+  	border: none;
+  	padding: 0!important;
+  	color: #069;
+  	text-decoration: underline;
+  	cursor: pointer;
+}
