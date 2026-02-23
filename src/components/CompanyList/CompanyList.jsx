@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CompanySummary from 'components/CompanySummary/CompanySummary'
+import CompanySummary from '../CompanySummary/CompanySummary'
 
 const showPreviews = () => {
 let cards = []

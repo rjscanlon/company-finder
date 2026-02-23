@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import fetchJsonp from 'fetch-jsonp';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
-import SearchBar from 'components/SearchBar/SearchBar';
-import CompanyList from 'components/CompanyList/CompanyList';
-import CompanyDetails from 'components/CompanyDetails/CompanyDetails';
+import SearchBar from './components/SearchBar/SearchBar';
+import CompanyList from './components/CompanyList/CompanyList';
+import CompanyDetails from './components/CompanyDetails/CompanyDetails';
 
 import './App.css';
 
