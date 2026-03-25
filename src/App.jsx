@@ -29,21 +29,29 @@ function App() {
         setSearchActive(true);
         setChosenCompany({Abn: searchTerm});
 
-        fetchJsonp(ABNSearchURL + '?abn=' + searchTerm + '&guid=' + GUID, {
+        const encodedAbn = encodeURIComponent(searchTerm);
+        const encodedGuid = encodeURIComponent(GUID);
+
+        fetchJsonp(`${ABNSearchURL}?abn=${encodedAbn}&guid=${encodedGuid}`, {
             timeout: 10000,
           })
           .then(response => response.json())
           .then(data => {
             if(data.Abn) {
               setChosenCompany(data);
-              setSearchActive(false);
             } else {
               setCompanies([]) ;
-              setSearchActive(false);
               setChosenCompany({});
             }
           })
-          .catch(error => console.error(error));
+          .catch(error => {
+            console.error(error);
+            setCompanies([]);
+            setChosenCompany({});
+          })
+          .finally(() => {
+            setSearchActive(false);
+          });
 
        // otherwise search by name
        } else if(searchTerm.match(/[A-Za-z]/)) {
@@ -52,19 +60,28 @@ function App() {
         setSearchActive(true);
         setChosenCompany({});
         
-        fetchJsonp(nameSearchURL + '?name=' + searchTerm + '&guid=' + GUID, {
+        const encodedName = encodeURIComponent(searchTerm);
+        const encodedGuid = encodeURIComponent(GUID);
+
+        fetchJsonp(`${nameSearchURL}?name=${encodedName}&guid=${encodedGuid}`, {
             timeout: 10000,
           })
           .then(response => response.json())
           .then(data => {
             setCompanies(data.Names);
-            setSearchActive(false);
           })
-          .catch(error => console.error(error));
+          .catch(error => {
+            console.error(error);
+            setCompanies([]);
+          })
+          .finally(() => {
+            setSearchActive(false);
+          });
 
        } else {
          setSearchActive(false);
          setCompanies([]);
+         setChosenCompany({});
        }
 
      } else {
