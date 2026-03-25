@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import fetchJsonp from 'fetch-jsonp';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 
@@ -19,7 +19,13 @@ function App() {
   const [companies, setCompanies] = useState([]);
   const [chosenCompany, setChosenCompany] = useState({});
 
-  const performSearch = async (searchTerm) => {
+  // JSONP requests can't be aborted cleanly; guard against stale/out-of-order responses.
+  const requestIdRef = useRef(0);
+
+  const performSearch = useCallback((searchTerm) => {
+    const requestId = ++requestIdRef.current;
+    const isCurrentRequest = () => requestIdRef.current === requestId;
+
     if(searchTerm.length > 2) {
 
       // if term is 11 digit number search by ABN
@@ -37,6 +43,7 @@ function App() {
           })
           .then(response => response.json())
           .then(data => {
+            if (!isCurrentRequest()) return;
             if(data.Abn) {
               setChosenCompany(data);
             } else {
@@ -45,11 +52,13 @@ function App() {
             }
           })
           .catch(error => {
+            if (!isCurrentRequest()) return;
             console.error(error);
             setCompanies([]);
             setChosenCompany({});
           })
           .finally(() => {
+            if (!isCurrentRequest()) return;
             setSearchActive(false);
           });
 
@@ -68,13 +77,16 @@ function App() {
           })
           .then(response => response.json())
           .then(data => {
+            if (!isCurrentRequest()) return;
             setCompanies(data.Names);
           })
           .catch(error => {
+            if (!isCurrentRequest()) return;
             console.error(error);
             setCompanies([]);
           })
           .finally(() => {
+            if (!isCurrentRequest()) return;
             setSearchActive(false);
           });
 
@@ -90,9 +102,12 @@ function App() {
        setCompanies([]);
        setChosenCompany({});
      }
-  };
+  }, []);
 
-  const performSearchDebounced = AwesomeDebouncePromise(performSearch, 500);
+  const performSearchDebounced = useMemo(
+    () => AwesomeDebouncePromise(performSearch, 500),
+    [performSearch]
+  );
 
   return (
     <div className="App">
