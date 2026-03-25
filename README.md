@@ -25,7 +25,7 @@ This launches the test runner and runs a set of unit tests to check basic app fu
 
 ## Implementation details and assumptions
 
-The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is built with [Vite](https://vitejs.dev/) + React.
 
 ### Some external libraries have been utilised:
 

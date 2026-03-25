@@ -5,7 +5,7 @@ import CompanySummary from '../CompanySummary/CompanySummary'
 
 const showPreviews = () => {
 let cards = []
-	// render 5 skeleton cards while loading data
+	// render 6 skeleton cards while loading data
 	for (let i = 0; i < 6; i++) {
 	  cards.push(<CompanySummary key={i} company={{}}/>)
 	}
